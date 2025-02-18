@@ -1,7 +1,15 @@
 import 'package:ejemplo_firebase/Pagines/Pagina_registre.dart';
+import 'package:ejemplo_firebase/firebase_options.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
-void main() {
+void main() async {
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
   runApp(const MainApp());
 }
 
@@ -46,6 +54,10 @@ class MainApp extends StatelessWidget {
    - Deiexem seleccionats només els dispositius amb els que 
       volem que funcioni l'aplicació (en aquest cas android i web).
 
-  
+
+8) Instal.lem les dependències de Firebase que vulguem utilizar:
+   - flutter pub add firebase_core
+   - flutter pub add firebase_auth
+   (amb això, marxen els errors de firebase_options.dart)
 
 */
