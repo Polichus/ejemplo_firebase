@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class PaginaLogin extends StatelessWidget {
-  final Function()? ferClic;
+  final void Function() ferClic;
 
   const PaginaLogin({
     super.key,
