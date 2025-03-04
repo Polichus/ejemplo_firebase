@@ -1,4 +1,5 @@
 import 'package:ejemplo_firebase/Components/item_usuari.dart';
+import 'package:ejemplo_firebase/Pagines/Pagina_chat.dart';
 import 'package:ejemplo_firebase/auth/servei_auth.dart';
 import 'package:ejemplo_firebase/chat/servei_chat.dart';
 import 'package:flutter/foundation.dart';
@@ -17,7 +18,7 @@ class _PaginaIniciState extends State<PaginaInici> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.deepPurple[200],
-        title: const Text("Pàgina d'inici"),
+        title: Text(ServeiAuth().getUsuariActual()!.email!),
         actions: [
           IconButton(
             onPressed: () {
@@ -41,18 +42,33 @@ class _PaginaIniciState extends State<PaginaInici> {
 
           // Es retornen les dades
           return ListView(
-            children: snapshot.data!.map(<Widget>
-              (dadesUsuaris) => _construeixItemUsuari(dadesUsuaris)
-            ).toList(),
+            children: snapshot.data!
+                .map(<Widget>(dadesUsuaris) =>
+                    _construeixItemUsuari(dadesUsuaris))
+                .toList(),
           );
-
         },
       ),
     );
   }
 
-  Widget _construeixItemUsuari(Map<String, dynamic> dadesUsuari){
-    
-    return ItemUsuari(emailUsuari: dadesUsuari["email"]);
+  Widget _construeixItemUsuari(Map<String, dynamic> dadesUsuari) {
+    if (dadesUsuari["email"] == ServeiAuth().getUsuariActual()!.email) {
+      return Container();
+    }
+
+    return ItemUsuari(
+      emailUsuari: dadesUsuari["email"],
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => PaginaChat(
+              idReceptor: dadesUsuari["uid"],
+            ),
+          ),
+        );
+      },
+    );
   }
 }

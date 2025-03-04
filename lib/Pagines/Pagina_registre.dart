@@ -4,10 +4,12 @@ import 'package:ejemplo_firebase/auth/servei_auth.dart';
 import 'package:flutter/material.dart';
 
 class PaginaRegistre extends StatelessWidget {
-
   final Function()? ferClic;
 
-  const PaginaRegistre({super.key, required this.ferClic,});
+  const PaginaRegistre({
+    super.key,
+    required this.ferClic,
+  });
 
   void ferRegistre(BuildContext context, String email, String password,
       String confPassword) async {
@@ -154,10 +156,13 @@ class PaginaRegistre extends StatelessWidget {
                 // Botó registra't.
                 BotoAuth(
                   text: "Registra't",
-                  onTap: () => ferRegistre(context, tecEmail.text,
-                      tecPassword.text, tecConfPass.text),
+                  onTap: () => ferRegistre(
+                    context,
+                    tecEmail.text,
+                    tecPassword.text,
+                    tecConfPass.text,
+                  ),
                 ),
-
               ],
             ),
           ),
