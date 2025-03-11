@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ejemplo_firebase/Components/bombolla_missatge.dart';
+import 'package:ejemplo_firebase/auth/servei_auth.dart';
 import 'package:ejemplo_firebase/chat/servei_chat.dart';
 import 'package:flutter/material.dart';
 
@@ -36,9 +39,39 @@ class _PaginaChatState extends State<PaginaChat> {
   }
 
   Widget _crearZonaMostrarMissatges() {
-    return const Expanded(
-      child: Text("1"),
+    return Expanded(
+      child: StreamBuilder(
+          stream: ServeiChat().getMissatges(
+            ServeiAuth().getUsuariActual()!.uid,
+            widget.idReceptor,
+          ),
+          builder: (context, snapshot) {
+            //Cas que hi hagi error.
+            if (snapshot.hasError) {
+              return const Text("Error carregant missatges.");
+            }
+
+            //Cas que este carregant les dades.
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Text("Carregant missatges...");
+            }
+
+            //Retornar dades (missatges).
+            return ListView(
+              children: snapshot.data!.docs
+                  .map((document) => _construirItemMissatge(document))
+                  .toList(),
+            );
+          }),
     );
+  }
+
+  Widget _construirItemMissatge(DocumentSnapshot documentSnapshot) {
+    Map<String, dynamic> data = documentSnapshot.data() as Map<String, dynamic>;
+
+    return BombollaMissatge(
+      missatge: data["missatge"],
+    ); //Text(data["missatge"]);
   }
 
   _crearZonaEscriureMissatges() {
