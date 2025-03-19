@@ -1,5 +1,6 @@
 import 'package:ejemplo_firebase/Components/item_usuari.dart';
 import 'package:ejemplo_firebase/Pagines/Pagina_chat.dart';
+import 'package:ejemplo_firebase/Pagines/editar_dades_usuari.dart';
 import 'package:ejemplo_firebase/auth/servei_auth.dart';
 import 'package:ejemplo_firebase/chat/servei_chat.dart';
 import 'package:flutter/foundation.dart';
@@ -20,6 +21,17 @@ class _PaginaIniciState extends State<PaginaInici> {
         backgroundColor: Colors.deepPurple[200],
         title: Text(ServeiAuth().getUsuariActual()!.email!),
         actions: [
+          IconButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const EditarDadesUsuari(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.person),
+          ),
           IconButton(
             onPressed: () {
               ServeiAuth().ferLogout();
