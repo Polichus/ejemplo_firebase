@@ -1,0 +1,1 @@
+C:\Users\p.gonzalez\Desktop\FlutterProject\ejemplo_firebase\build\app\intermediates\cxx\Debug\115e114a\obj\arm64-v8a
